@@ -1,5 +1,5 @@
-
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+
 const env = process.env.NODE_ENV || 'development';
 // set to 'production' or 'development' in your env
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
@@ -11,8 +11,10 @@ const finalCSSLoader = (env === 'production') ? MiniCssExtractPlugin.loader : { 
 module.exports = {
   devServer: {
     hot: true,
+    historyApiFallback: true,
   },
   mode: env,
+  output: { publicPath: '/' },
   entry: ['./src'], // this is where our app lives
   devtool: 'source-map', // this enables debugging with source in chrome devtools
   module: {
@@ -68,7 +70,11 @@ module.exports = {
   plugins: [
     new MiniCssExtractPlugin(),
     new HtmlWebpackPlugin({
-    template: './src/index.html',
-    filename: './index.html',
-  })],
+      template: './src/index.html',
+      filename: './index.html',
+    },
+    {
+      template: './src/index.html',
+      filename: './200.html',
+    })],
 };
