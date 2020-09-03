@@ -46,6 +46,7 @@ $('#0').on('keydown', (e) => {
     synth.triggerAttackRelease('C4', '8n', Tone.now() + 0.015);
     presses += 1;
   } else {
+    console.log('first array of 50 keypress intervals: ');
     console.log(playback);
   }
 });
@@ -73,8 +74,8 @@ $('#1').on('keydown', (e) => {
   if (e.keyCode === 32) {
     // const rec = Tone.now();
     const mod = randInt(0, 90);
-    console.log(mod);
-    console.log(agencyPerTrial[i]);
+    console.log(`randomly generated number on press: ${mod}`);
+    console.log(`agency threshold: ${agencyPerTrial[i]}`);
 
     if (mod < agencyPerTrial[i]) {
       synth.triggerAttackRelease('C4', '8n', Tone.now() + 0.015);
@@ -82,7 +83,7 @@ $('#1').on('keydown', (e) => {
       // tonePlay.push(0.015);
     } else {
       const pick = randInt(index, index + 49);
-      console.log(playback[pick]);
+      console.log(`interval selected from random array: ${playback[pick]}`);
       delsynth.triggerAttackRelease('C4', '8n', Tone.now() + playback[pick]);
     }
     timePress.push(Tone.now());
