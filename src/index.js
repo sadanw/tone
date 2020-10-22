@@ -250,7 +250,10 @@ const intro_trial = {
   type: 'jspsych-detect-held-down-keys',
   choices: ['space'],
   on_start() {
+  },
+  loop_function(data) {
     Tone.start();
+    // eslint-disable-next-line no-loop-func
     $('#0').on('keydown', (e) => {
       if (e.keyCode === 32 && presses < 50) {
         timePress.push(Tone.now());
@@ -276,10 +279,22 @@ const single_trial = {
   response_ends_trial: false,
   stimulus: 'Please press spacebar to generate tones for this 10s trial',
   choices: ['space'],
-  on_start(i = 0) {
+  // eslint-disable-next-line func-names
+  loop_function() {
+    console.log('in loop');
+    let started = false;
+    let i = 0;
+    if (jsPsych.time_elapsed >= 10000) {
+      i += 1;
+    }
     Tone.start();
     let index = 0;
-    $('#1').on('keydown', (e) => {
+    $('#experiment').on('keydown', (e) => {
+      console.log('clicked');
+      if (started === false) {
+        started = true;
+        Tone.start();
+      }
       // will use jsPsych to put these into 10s blocks and switch agency level threshold
       if (e.keyCode === 32) {
         // const rec = Tone.now();
@@ -305,6 +320,7 @@ const single_trial = {
         index += 1;
         presses += 1;
       }
+      return true;
     });
   },
 };
